@@ -146,7 +146,7 @@ def segmentCharacters():
 	                                       linewidth=2, fill=False)
 	        ax1.add_patch(rect_border)
 
-	        resized_char = resize(roi, (20, 20))
+	        resized_char = resize(roi, (20, 20), mode='constant')
 	        characters.append(resized_char)
 
 	        column_list.append(x0)
@@ -199,7 +199,10 @@ def make_prediction():
 if __name__ == '__main__':
 	path = "sdataset/"
 	filename = "car.png"
-	print(filename)
-	detectPlate(path + filename)
-	segmentCharacters()
-	make_prediction()
+
+	files_name = glob('sdataset/**')
+	for file in files_name:
+		print(file)
+		detectPlate(file)
+		segmentCharacters()
+		make_prediction()
