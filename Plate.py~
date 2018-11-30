@@ -20,8 +20,6 @@ import cv2
 import os
 from werkzeug.utils import secure_filename
 
-from glob import glob
-
 
 #Variaveis Globais
 
@@ -152,10 +150,10 @@ def segmentCharacters():
 	        column_list.append(x0)
 	plt.axis('off')
 	plt.savefig('segmented_car.png', bbox_inches='tight')
-	#print('characters',characters)
-	#print('column_list',column_list)
-	#print(type(characters))
-	#print(type(column_list))
+	print('characters',characters)
+	print('column_list',column_list)
+	print(type(characters))
+	print(type(column_list))
 	
 
 
@@ -173,33 +171,29 @@ def make_prediction():
 	    result = model.predict(each_character)
 	    classification_result.append(result)
 
-	#print('Classification result')
-	#print(classification_result)
+	print('Classification result')
+	print(classification_result)
 
 	plate_string = ''
 	for eachPredict in classification_result:
 	    plate_string += eachPredict[0]
 
-	#print('Predicted license plate')
-	#print(plate_string)
+	print('Predicted license plate')
+	print(plate_string)
 	column_list_copy = column_list[:]
 	column_list.sort()
 	rightplate_string = ''
 	for each in column_list:
 	    rightplate_string += plate_string[column_list_copy.index(each)]
 
-	print('License Plate')
+	print('License plate')
 	print(rightplate_string)
 	
 	characters = []
 	column_list = []
-	plate_obj = None
 
 
 if __name__ == '__main__':
-	path = "sdataset/"
-	filename = "car.png"
-	print(filename)
-	detectPlate(path + filename)
+	detectPlate("car.jpg")
 	segmentCharacters()
 	make_prediction()
